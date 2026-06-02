@@ -26,7 +26,32 @@
   --font:"Segoe UI",-apple-system,BlinkMacSystemFont,sans-serif;
   --r:10px;--rsm:6px;
 }
-body{font-family:var(--font);background:var(--off);color:var(--grey);min-height:100vh;font-size:15px}
+body{font-family:var(--font);background:var(--off);color:var(--grey);min-height:100vh;font-size:15px;transition:background .25s,color .25s}
+
+/* DARK MODE */
+body.dark{
+  --off:#111315;--white:#1c1f22;--bdr:rgba(255,255,255,.1);
+  --grey:#e2e4e7;--grey-m:rgba(226,228,231,.55);--grey-l:rgba(226,228,231,.1);
+  --teal:#3fd9d5;--teal-l:#64CCC9;--teal-d:#00b5b0;
+}
+body.dark .topbar{box-shadow:0 2px 8px rgba(0,0,0,.4)}
+body.dark .kpi{box-shadow:0 1px 4px rgba(0,0,0,.3)}
+body.dark .card{box-shadow:0 1px 4px rgba(0,0,0,.3)}
+body.dark .hm-card{background:#16191c}
+body.dark .act-card{background:var(--white)}
+body.dark .intel-card{box-shadow:0 1px 4px rgba(0,0,0,.3)}
+body.dark .pill{color:var(--grey)}
+body.dark .pill.active{color:#fff}
+body.dark .dnote{background:#2a1f00;border-color:#7a5200;color:#f5c842}
+body.dark canvas{filter:brightness(.9)}
+
+/* TOGGLE */
+.dm-toggle{display:flex;align-items:center;gap:8px;cursor:pointer;user-select:none}
+.dm-toggle-track{width:44px;height:24px;border-radius:12px;background:#ccc;position:relative;transition:background .2s;flex-shrink:0}
+body.dark .dm-toggle-track{background:var(--teal)}
+.dm-toggle-thumb{width:20px;height:20px;border-radius:50%;background:#fff;position:absolute;top:2px;left:2px;transition:left .2s;box-shadow:0 1px 3px rgba(0,0,0,.25)}
+body.dark .dm-toggle-thumb{left:22px}
+.dm-toggle-label{font-size:12px;font-weight:600;color:var(--grey-m);white-space:nowrap}
 
 /* TOPBAR */
 .topbar{background:var(--white);border-bottom:2.5px solid var(--teal);padding:0 32px;display:flex;align-items:center;justify-content:space-between;height:80px;position:sticky;top:0;z-index:100;box-shadow:0 2px 8px rgba(0,0,0,.08)}
@@ -180,14 +205,24 @@ body{font-family:var(--font);background:var(--off);color:var(--grey);min-height:
 /* ═══════════════════════════════════
    MOBILE RESPONSIVE — breakpoint 768px
 ═══════════════════════════════════ */
+/* ═══════════════════════════════════
+   MOBILE RESPONSIVE
+═══════════════════════════════════ */
 @media(max-width:768px){
   body{font-size:14px}
 
-  /* Topbar */
-  .topbar{padding:0 14px;height:70px}
-  .topbar-logo{height:46px}
-  .topbar-meta{font-size:10px;color:var(--grey-m)}
-  .topbar-badge{font-size:10px;padding:3px 8px}.topbar-right{flex-direction:column;align-items:flex-end;gap:2px}
+  /* Topbar — taller to fit stacked right items */
+  .topbar{padding:0 14px;height:auto;min-height:60px;flex-wrap:wrap;gap:6px;padding-top:8px;padding-bottom:8px}
+  .topbar-logo{height:40px}
+  .topbar-right{flex-direction:column;align-items:flex-end;gap:4px}
+  .topbar-meta{font-size:10px}
+  .topbar-badge{font-size:10px;padding:3px 8px}
+  /* Dark mode toggle on mobile */
+  .dm-toggle{gap:6px}
+  .dm-toggle-track{width:36px;height:20px;border-radius:10px}
+  .dm-toggle-thumb{width:16px;height:16px;top:2px;left:2px}
+  body.dark .dm-toggle-thumb{left:18px}
+  .dm-toggle-label{font-size:10px}
 
   /* Nav tabs */
   .nav-tabs{padding:0 10px;gap:0}
@@ -199,7 +234,7 @@ body{font-family:var(--font);background:var(--off);color:var(--grey);min-height:
   /* KPI strips — 2 columns on mobile */
   .kpi-strip,.kpi-strip.six{grid-template-columns:repeat(2,1fr)!important;gap:8px}
   .kpi{padding:12px 12px 10px}
-  .kpi-value{font-size:22px}
+  .kpi-value{font-size:20px}
   .kpi-label{font-size:10px}
   .kpi-delta{font-size:11px}
 
@@ -221,9 +256,12 @@ body{font-family:var(--font);background:var(--off);color:var(--grey);min-height:
 
   /* Tables — horizontal scroll */
   .tbl-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
-  .camp-table{font-size:12px;min-width:700px}
-  .summary-table{min-width:auto;font-size:11px;table-layout:auto}
-  .camp-table th,.camp-table td{padding:7px 6px}
+  .camp-table{font-size:11px;min-width:680px}
+  .camp-table th{font-size:10px;padding:6px 4px;letter-spacing:0}
+  .camp-table td{padding:6px 4px;font-size:11px}
+  .summary-table{min-width:380px;font-size:11px;table-layout:auto}
+  .summary-table th,.summary-table td{padding:5px 4px;font-size:11px;white-space:nowrap}
+  .summary-table{border-radius:6px;overflow:hidden}
 
   /* Funnel */
   .f-lbl{width:62px;font-size:11px}
@@ -244,7 +282,7 @@ body{font-family:var(--font);background:var(--off);color:var(--grey);min-height:
   .intel-val{font-size:12px}
 
   /* Sort bar */
-  .sort-bar{gap:6px}
+  .sort-bar{gap:6px;flex-wrap:wrap}
   .sort-btn{font-size:11px;padding:4px 10px}
 
   /* Charts height reduced */
@@ -263,31 +301,30 @@ body{font-family:var(--font);background:var(--off);color:var(--grey);min-height:
 @media(max-width:480px){
   .kpi-strip,.kpi-strip.six{grid-template-columns:1fr 1fr!important}
   .nav-tab{font-size:11px;padding:10px 8px}
-  .topbar-logo{height:36px}
-}
-  .summary-table th,.summary-table td{padding:6px 5px;white-space:nowrap}
-  .summary-table{border-radius:6px;overflow:hidden}
-
-/* ── MOBILE TABLE COLUMN FIX ── */
-@media(max-width:768px){
-  .camp-table{font-size:11px}
-  .camp-table th{font-size:10px;padding:6px 4px;letter-spacing:0}
-  .camp-table td{padding:6px 4px;font-size:11px}
-  /* Summary table is simpler — can be tighter */
-  .summary-table{min-width:400px}
-  .summary-table th,.summary-table td{padding:5px 4px;font-size:11px;white-space:nowrap}
-  /* Topbar right align on mobile */
-  .topbar-right{flex-direction:column;align-items:flex-end;gap:2px}
-  .topbar-meta{font-size:10px}
-  .topbar-badge{font-size:10px;padding:3px 8px}
-}
-@media(max-width:480px){
-  .camp-table{font-size:10px}
+  .topbar-logo{height:32px}
+  .topbar-meta{display:none} /* hide on very small screens to save space */
+  .kpi-value{font-size:18px}
+  .camp-table{font-size:10px;min-width:600px}
   .camp-table th{font-size:9px;padding:5px 3px}
   .camp-table td{padding:5px 3px;font-size:10px}
 }
-.camp-table td.td-name{white-space:normal;min-width:160px;max-width:260px;word-break:break-word}
+
+.camp-table td.td-name{white-space:normal;min-width:140px;max-width:220px;word-break:break-word}
 </style>
+<script>
+function toggleDark(){
+  var isDark=document.body.classList.toggle('dark');
+  var lbl=document.getElementById('dm-label');
+  if(lbl) lbl.textContent=isDark?'🌙 Night':'☀️ Day';
+  try{localStorage.setItem('fc-dark',isDark?'1':'0');}catch(e){}
+}
+// Restore saved preference immediately (before paint)
+try{
+  if(localStorage.getItem('fc-dark')==='1'){
+    document.documentElement.classList.add('dark-pre');
+  }
+}catch(e){}
+</script>
 </head>
 <body>
 
@@ -296,6 +333,10 @@ body{font-family:var(--font);background:var(--off);color:var(--grey);min-height:
   <div class="topbar-right">
     <span class="topbar-meta">Email Marketing Report 2026 · Constant Contact</span>
     <span class="topbar-badge">Jan–May 2026</span>
+    <div class="dm-toggle" onclick="toggleDark()" title="Toggle day/night mode">
+      <div class="dm-toggle-track"><div class="dm-toggle-thumb"></div></div>
+      <span class="dm-toggle-label" id="dm-label">☀️ Day</span>
+    </div>
   </div>
 </header>
 
@@ -312,15 +353,15 @@ body{font-family:var(--font);background:var(--off);color:var(--grey);min-height:
 
 <!-- OVERVIEW -->
 <div class="page active" id="page-overview">
-  <div class="dnote"><strong>Data source:</strong> All figures are directly from Constant Contact campaign reports (Jan–May 2026). Jan–Mar now have full per-campaign data loaded.</div>
+  <div class="dnote"><strong>Data source:</strong> All figures are directly from Constant Contact campaign reports (Jan–May 2026). All months (Jan–May) have full per-campaign data loaded. Dashboard covers 32 campaigns (Jan–May 2026 only). The official CC aggregate report (113,074 sent) includes one Feb 2025 campaign which has been excluded here.</div>
 
   <div class="kpi-strip six">
-    <div class="kpi"><div class="kpi-label">Total Campaigns</div><div class="kpi-value">33</div><span class="kpi-delta ne">Jan–May 2026</span></div>
-    <div class="kpi"><div class="kpi-label">Total Sent</div><div class="kpi-value">116,028</div><span class="kpi-delta ne">Jan–May 2026</span></div>
-    <div class="kpi"><div class="kpi-label">Total Delivered</div><div class="kpi-value">105,749</div><span class="kpi-delta ne">91% delivery</span></div>
-    <div class="kpi al"><div class="kpi-label">Total Revenue</div><div class="kpi-value">$383,902</div><span class="kpi-delta up">↑ Jan→May growth</span></div>
+    <div class="kpi"><div class="kpi-label">Total Campaigns</div><div class="kpi-value">32</div><span class="kpi-delta ne">Jan–May 2026</span></div>
+    <div class="kpi"><div class="kpi-label">Total Sent</div><div class="kpi-value">110,187</div><span class="kpi-delta ne">Jan–May 2026</span></div>
+    <div class="kpi"><div class="kpi-label">Total Delivered</div><div class="kpi-value">103,887</div><span class="kpi-delta ne">92% delivery</span></div>
+    <div class="kpi al"><div class="kpi-label">Total Revenue</div><div class="kpi-value">$384,416</div><span class="kpi-delta up">↑ Jan→May growth</span></div>
     <div class="kpi"><div class="kpi-label">Open Rate Range</div><div class="kpi-value">15–43%</div><span class="kpi-delta ne">vs avg ~32%</span></div>
-    <div class="kpi ar"><div class="kpi-label">Total Bounces</div><div class="kpi-value">9,247</div><span class="kpi-delta dn">↑ Apr spike 4,453</span></div>
+    <div class="kpi ar"><div class="kpi-label">Total Bounces</div><div class="kpi-value">9,375</div><span class="kpi-delta dn">↑ Apr spike 4,453</span></div>
   </div>
 
   <div class="g2">
@@ -340,11 +381,11 @@ body{font-family:var(--font);background:var(--off);color:var(--grey);min-height:
       <div class="cs">Jan–May 2026 combined</div>
       <div class="funnel" style="margin-top:12px">
         <div class="f-row"><span class="f-lbl">Campaigns</span><div class="f-track"><div class="f-bar" style="width:30%;background:#007F7B">33</div></div><span class="f-pct">5 mo</span></div>
-        <div class="f-row"><span class="f-lbl">Sent</span><div class="f-track"><div class="f-bar" style="width:100%;background:#007F7B">116,028</div></div><span class="f-pct">100%</span></div>
-        <div class="f-row"><span class="f-lbl">Delivered</span><div class="f-track"><div class="f-bar" style="width:91%;background:#64CCC9">105,749</div></div><span class="f-pct">91%</span></div>
-        <div class="f-row"><span class="f-lbl">Opened</span><div class="f-track"><div class="f-bar" style="width:28%;background:#53565A">30,002</div></div><span class="f-pct">25%</span></div>
-        <div class="f-row"><span class="f-lbl">Clicked</span><div class="f-track"><div class="f-bar" style="width:4%;background:#007F7B;opacity:.65;min-width:44px">3,800</div></div><span class="f-pct">3%</span></div>
-        <div class="f-row"><span class="f-lbl">Orders</span><div class="f-track"><div class="f-bar" style="width:1.5%;background:#64CCC9;opacity:.7;min-width:40px">290</div></div><span class="f-pct">0.3%</span></div>
+        <div class="f-row"><span class="f-lbl">Sent</span><div class="f-track"><div class="f-bar" style="width:100%;background:#007F7B">110,187</div></div><span class="f-pct">100%</span></div>
+        <div class="f-row"><span class="f-lbl">Delivered</span><div class="f-track"><div class="f-bar" style="width:92%;background:#64CCC9">103,887</div></div><span class="f-pct">91%</span></div>
+        <div class="f-row"><span class="f-lbl">Opened</span><div class="f-track"><div class="f-bar" style="width:24%;background:#53565A">26,909</div></div><span class="f-pct">25%</span></div>
+        <div class="f-row"><span class="f-lbl">Clicked</span><div class="f-track"><div class="f-bar" style="width:3%;background:#007F7B;opacity:.65;min-width:44px">2,949</div></div><span class="f-pct">3%</span></div>
+        <div class="f-row"><span class="f-lbl">Orders</span><div class="f-track"><div class="f-bar" style="width:1%;background:#64CCC9;opacity:.7;min-width:40px">279</div></div><span class="f-pct">0.3%</span></div>
       </div>
     </div>
   </div>
@@ -358,18 +399,18 @@ body{font-family:var(--font);background:var(--off);color:var(--grey);min-height:
   <div class="g2b">
     <div class="card">
       <div class="ct">Month-by-month summary</div>
-      <div class="cs">All months now have per-campaign data</div>
+      <div class="cs">Jan–May 2026 · full per-campaign data</div>
       <div class="tbl-wrap"><table class="camp-table summary-table">
         <thead><tr><th>Month</th><th>Sent</th><th>Open%</th><th>Click%</th><th>Revenue</th><th>Conv.</th><th>Bounce</th><th>Camp.</th></tr></thead>
         <tbody>
           <tr><td>Jan 2026</td><td>9,917</td><td>25%</td><td>3%</td><td>$48,914</td><td>43</td><td>623</td><td>3</td></tr>
-          <tr><td>Feb 2026</td><td>15,705</td><td style="color:#B91C1C;font-weight:700">20%</td><td>3%</td><td>$58,233</td><td>39</td><td>901</td><td>5*</td></tr>
-          <tr><td>Mar 2026</td><td>36,756</td><td>27%</td><td>3%</td><td>$84,620</td><td>64</td><td>2,002</td><td>9</td></tr>
+          <tr><td>Feb 2026</td><td>12,818</td><td style="color:#B91C1C;font-weight:700">20%</td><td>3%</td><td>$39,258</td><td>27</td><td>803</td><td>4</td></tr>
+          <tr><td>Mar 2026</td><td>33,802</td><td>27%</td><td>3%</td><td>$85,134</td><td>63</td><td>2,130</td><td>9</td></tr>
           <tr><td>Apr 2026</td><td>33,537</td><td style="color:#007F7B;font-weight:700">28%</td><td>3%</td><td style="color:#007F7B;font-weight:700">$100,648</td><td>56</td><td style="color:#B91C1C;font-weight:700">4,453</td><td>8</td></tr>
           <tr><td>May 2026</td><td>20,113</td><td>27%</td><td>3%</td><td>$91,487</td><td style="color:#007F7B;font-weight:700">77</td><td>1,268</td><td>8</td></tr>
         </tbody>
       </table></div>
-      <p style="font-size:11px;color:var(--grey-m);margin-top:6px">* Feb includes QIUB4#6 - AT90 sent Feb 2025 — confirm if in-scope</p>
+      <p style="font-size:11px;color:var(--grey-m);margin-top:6px">Feb 2026 — 4 campaigns</p>
     </div>
     <div class="card">
       <div class="ct">Confirmed facts — all months</div>
@@ -436,7 +477,7 @@ body{font-family:var(--font);background:var(--off);color:var(--grey);min-height:
       <ul class="ins-list">
         <li>Industry Update (Mar 19) generated $35,921 from 4,585 sends — highest revenue-per-send of any campaign<span class="ins-src">Mar Industry Update report</span></li>
         <li>QIUB8#4 Toolflex: $15,044 from 14 orders at 1.6% conversion — strongest QIUB product email<span class="ins-src">Mar Toolflex report</span></li>
-        <li>UPAC Products (Feb): $28,787 from 21 orders at 2.3% conversion — strongest Feb campaign<span class="ins-src">Feb UPAC report</span></li>
+        <li>UPAC Products Now Available! (Feb): $28,787 from 21 orders at 2.3% conversion — strongest Feb campaign<span class="ins-src">Feb UPAC report</span></li>
       </ul>
     </div>
     <div class="ins-block">
@@ -479,7 +520,7 @@ body{font-family:var(--font);background:var(--off);color:var(--grey);min-height:
 
 <!-- MAY 2026 -->
 <div class="page" id="page-may">
-  <div class="dnote"><strong>May 2026 — full per-campaign data.</strong> All figures from individual Constant Contact reports and heatmaps.</div>
+  <div class="dnote"><strong>May 2026 — full per-campaign data loaded.</strong> All figures from individual Constant Contact reports and heatmaps.</div>
   <div class="kpi-strip">
     <div class="kpi"><div class="kpi-label">Total Campaigns</div><div class="kpi-value">8</div><span class="kpi-delta ne">May 2026</span></div>
     <div class="kpi"><div class="kpi-label">Emails Sent</div><div class="kpi-value">20,113</div><span class="kpi-delta ne">May 2026</span></div>
@@ -521,7 +562,7 @@ body{font-family:var(--font);background:var(--off);color:var(--grey);min-height:
 
 <!-- APRIL 2026 -->
 <div class="page" id="page-apr">
-  <div class="dnote"><strong>April 2026 — full per-campaign data.</strong></div>
+  <div class="dnote"><strong>April 2026 — full per-campaign data loaded.</strong> All figures from individual Constant Contact reports and heatmaps.</div>
   <div class="kpi-strip">
     <div class="kpi"><div class="kpi-label">Total Campaigns</div><div class="kpi-value">8</div><span class="kpi-delta ne">April 2026</span></div>
     <div class="kpi"><div class="kpi-label">Emails Sent</div><div class="kpi-value">33,537</div><span class="kpi-delta ne">Apr 2026</span></div>
@@ -560,7 +601,7 @@ body{font-family:var(--font);background:var(--off);color:var(--grey);min-height:
 
 <!-- MARCH 2026 -->
 <div class="page" id="page-mar">
-  <div class="dnote"><strong>March 2026 — full per-campaign data loaded.</strong></div>
+  <div class="dnote"><strong>March 2026 — full per-campaign data loaded.</strong> All figures from individual Constant Contact reports and heatmaps.</div>
   <div class="kpi-strip">
     <div class="kpi"><div class="kpi-label">Total Campaigns</div><div class="kpi-value">9</div><span class="kpi-delta ne">March 2026</span></div>
     <div class="kpi"><div class="kpi-label">Emails Sent</div><div class="kpi-value">36,756</div><span class="kpi-delta ne">Mar 2026</span></div>
@@ -601,10 +642,10 @@ body{font-family:var(--font);background:var(--off);color:var(--grey);min-height:
 
 <!-- FEBRUARY 2026 -->
 <div class="page" id="page-feb">
-  <div class="dnote"><strong>February 2026 — full per-campaign data loaded.</strong> Note: QIUB4#6 - AT90 was sent Feb 25, 2025 — verify if in-scope.</div>
+  <div class="dnote"><strong>February 2026 — full per-campaign data loaded.</strong> All figures from individual Constant Contact reports and heatmaps.</div>
   <div class="kpi-strip">
     <div class="kpi"><div class="kpi-label">Total Campaigns</div><div class="kpi-value">4</div><span class="kpi-delta ne">Feb 2026 *</span></div>
-    <div class="kpi"><div class="kpi-label">Emails Sent</div><div class="kpi-value">15,705</div><span class="kpi-delta ne">Feb 2026</span></div>
+    <div class="kpi"><div class="kpi-label">Emails Sent</div><div class="kpi-value">12,818</div><span class="kpi-delta ne">Feb 2026</span></div>
     <div class="kpi ar"><div class="kpi-label">Open Rate</div><div class="kpi-value">20%</div><span class="kpi-delta dn">↓ Lowest month</span></div>
     <div class="kpi"><div class="kpi-label">Click Rate</div><div class="kpi-value">3%</div><span class="kpi-delta ne">Consistent</span></div>
     <div class="kpi al"><div class="kpi-label">Revenue</div><div class="kpi-value">$58,233</div><span class="kpi-delta up">Strong Feb</span></div>
@@ -620,7 +661,7 @@ body{font-family:var(--font);background:var(--off);color:var(--grey);min-height:
       <div class="ct">February confirmed facts</div><div class="cs">Direct from campaign reports</div>
       <div class="ins-block"><div class="ins-head">Confirmed</div><ul class="ins-list">
         <li>UPAC Products Now Available: highest revenue ($28,787) from 21 orders at 2.3% conversion<span class="ins-src">UPAC report</span></li>
-        <li>AT90 Gloves 2026: strongest click rate (5.6% in 2025 version, 2.8% in 2026) — glove content resonates<span class="ins-src">AT90 reports</span></li>
+        <li>AT90 Gloves 2026: 2.8% click rate with strong visual content — YouTube and product image drove most clicks<span class="ins-src">AT90 Gloves 2026 report</span></li>
         <li>Gumboots had the lowest open rate (16.3%) — footwear content underperforms<span class="ins-src">Gumboots report</span></li>
       </ul></div>
       <div class="ins-block"><div class="ins-head warn">Why Feb open rate was low</div><ul class="ins-list warn">
@@ -641,7 +682,7 @@ body{font-family:var(--font);background:var(--off);color:var(--grey);min-height:
 
 <!-- JANUARY 2026 -->
 <div class="page" id="page-jan">
-  <div class="dnote"><strong>January 2026 — full per-campaign data loaded.</strong></div>
+  <div class="dnote"><strong>January 2026 — full per-campaign data loaded.</strong> All figures from individual Constant Contact reports and heatmaps.</div>
   <div class="kpi-strip">
     <div class="kpi"><div class="kpi-label">Total Campaigns</div><div class="kpi-value">3</div><span class="kpi-delta ne">Jan 2026</span></div>
     <div class="kpi"><div class="kpi-label">Emails Sent</div><div class="kpi-value">9,917</div><span class="kpi-delta ne">Jan 2026</span></div>
@@ -751,8 +792,6 @@ const MAR = [
 MAR.sort((a,b)=>b.or-a.or);
 
 const FEB = [
-  {name:"QIUB4#6 – AT90 (2025)",month:"Feb",type:"prod",sent:2887,del:2789,or:24.2,cr:5.6,cl:157,bn:98,un:6,rev:18975.11,ord:12,cv:1.8,
-   hmTop:"View AT90 gloves here",hmCl:152,hmTotal:297,hmNote:"View gloves CTA: 152 clicks (51%). Sample request: 145 (49%). Two-link email — extremely focused."},
   {name:"AT90 Gloves 2026",month:"Feb",type:"prod",sent:3933,del:3705,or:23.5,cr:2.8,cl:104,bn:228,un:2,rev:6142.84,ord:5,cv:0.6,
    hmTop:"AT90 Silverlined Nitrile glove",hmCl:44,hmTotal:159,hmNote:"Main product image: 44 clicks (28%). YouTube video: 45 (28%). Sample request: 21 (13%). Visual content drives clicks."},
   {name:"UPAC Products Now Available!",month:"Feb",type:"prod",sent:3918,del:3689,or:24.5,cr:3.8,cl:140,bn:229,un:5,rev:28787.06,ord:21,cv:2.3,
@@ -913,12 +952,12 @@ window.sortAllCamps=function(key){
 ═══════════════════════════════════════════════════════ */
 const OV={
   months:['Jan','Feb','Mar','Apr','May'],
-  sent:[9917,15705,36756,33537,20113],
+  sent:[9917,12818,33802,33537,20113],
   delivered:[9298,14804,34600,29203,18591],
   openRate:[25,20,27,28,27],
   campaigns:[3,4,9,8,8],
-  revenue:[48914,58233,84620,100648,91487],
-  bounces:[623,901,2002,4453,1268],
+  revenue:[48914,39258,85134,100648,91487],
+  bounces:[623,803,2130,4453,1268],
   unsubs:[17,20,81,107,19]
 };
 
@@ -1051,6 +1090,23 @@ const byCR=[...ALL_CAMPS].filter(c=>c.cl>0).sort((a,b)=>b.cr-a.cr);
 buildIntelList("top-clickrate-list",byCR,"cr",c=>c.cr+"%",c=>c.cl+" clicks");
 buildTopURLs();
 buildAllCampsTable('rev');
+function toggleDark(){
+  var isDark=document.body.classList.toggle('dark');
+  var lbl=document.getElementById('dm-label');
+  if(lbl) lbl.textContent=isDark?'🌙 Night':'☀️ Day';
+  try{localStorage.setItem('fc-dark',isDark?'1':'0');}catch(e){}
+}
+// Restore preference on load
+(function(){
+  try{
+    if(localStorage.getItem('fc-dark')==='1'){
+      document.body.classList.add('dark');
+      var lbl=document.getElementById('dm-label');
+      if(lbl) lbl.textContent='🌙 Night';
+    }
+  }catch(e){}
+})();
+
 </script>
 </body>
 </html>
