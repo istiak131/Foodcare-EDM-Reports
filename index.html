@@ -20,8 +20,8 @@
 body{font-family:var(--font);background:var(--off);color:var(--grey);min-height:100vh;font-size:15px}
 
 /* TOPBAR */
-.topbar{background:var(--white);border-bottom:2.5px solid var(--teal);padding:0 32px;display:flex;align-items:center;justify-content:space-between;height:64px;position:sticky;top:0;z-index:100;box-shadow:0 2px 8px rgba(0,0,0,.08)}
-.topbar-logo{height:34px}
+.topbar{background:var(--white);border-bottom:2.5px solid var(--teal);padding:0 32px;display:flex;align-items:center;justify-content:space-between;height:80px;position:sticky;top:0;z-index:100;box-shadow:0 2px 8px rgba(0,0,0,.08)}
+.topbar-logo{height:68px}
 .topbar-right{display:flex;align-items:center;gap:14px}
 .topbar-meta{font-size:13px;color:var(--grey-m);font-weight:500}
 .topbar-badge{background:var(--teal);color:#fff;font-size:12px;font-weight:700;padding:5px 16px;border-radius:20px;letter-spacing:.04em}
@@ -175,10 +175,10 @@ body{font-family:var(--font);background:var(--off);color:var(--grey);min-height:
   body{font-size:14px}
 
   /* Topbar */
-  .topbar{padding:0 14px;height:56px}
-  .topbar-logo{height:26px}
-  .topbar-meta{display:none}
-  .topbar-badge{font-size:11px;padding:4px 10px}
+  .topbar{padding:0 14px;height:70px}
+  .topbar-logo{height:46px}
+  .topbar-meta{font-size:10px;color:var(--grey-m)}
+  .topbar-badge{font-size:10px;padding:3px 8px}.topbar-right{flex-direction:column;align-items:flex-end;gap:2px}
 
   /* Nav tabs */
   .nav-tabs{padding:0 10px;gap:0}
@@ -254,10 +254,32 @@ body{font-family:var(--font);background:var(--off);color:var(--grey);min-height:
 @media(max-width:480px){
   .kpi-strip,.kpi-strip.six{grid-template-columns:1fr 1fr!important}
   .nav-tab{font-size:11px;padding:10px 8px}
-  .topbar-badge{display:none}
+  .topbar-logo{height:36px}
 }
   .summary-table th,.summary-table td{padding:6px 5px;white-space:nowrap}
   .summary-table{border-radius:6px;overflow:hidden}
+
+/* ── MOBILE TABLE COLUMN FIX ── */
+@media(max-width:768px){
+  /* Remove fixed column widths on mobile — let table scroll horizontally */
+  .camp-table th[style*="width"],.camp-table td[style*="width"]{width:auto!important}
+  /* Tighten column headers to abbreviate */
+  .camp-table{min-width:620px;font-size:11px}
+  .camp-table th{font-size:10px;padding:6px 4px;letter-spacing:0}
+  .camp-table td{padding:6px 4px;font-size:11px}
+  /* Summary table is simpler — can be tighter */
+  .summary-table{min-width:400px}
+  .summary-table th,.summary-table td{padding:5px 4px;font-size:11px;white-space:nowrap}
+  /* Topbar right align on mobile */
+  .topbar-right{flex-direction:column;align-items:flex-end;gap:2px}
+  .topbar-meta{font-size:10px}
+  .topbar-badge{font-size:10px;padding:3px 8px}
+}
+@media(max-width:480px){
+  .camp-table{min-width:560px;font-size:10px}
+  .camp-table th{font-size:9px;padding:5px 3px}
+  .camp-table td{padding:5px 3px;font-size:10px}
+}
 </style>
 </head>
 <body>
@@ -441,7 +463,7 @@ body{font-family:var(--font);background:var(--off);color:var(--grey);min-height:
   </div>
   <div class="tbl-wrap">
   <table class="camp-table">
-    <thead><tr><th style="width:20%">Campaign</th><th style="width:7%">Month</th><th style="width:7%">Type</th><th style="width:7%">Sent</th><th style="width:7%">Open%</th><th style="width:7%">Click%</th><th style="width:7%">Clicks</th><th style="width:7%">Bounce</th><th style="width:7%">Unsub</th><th style="width:12%">Revenue</th><th style="width:5%">Orders</th><th style="width:5%">Conv%</th></tr></thead>
+    <thead><tr><th style="width:20%">Campaign</th><th style="width:7%">Month</th><th style="width:7%">Type</th><th style="width:7%">Sent</th><th style="width:7%">Open%</th><th style="width:7%">Click%</th><th style="width:7%">Clicks</th><th style="width:7%">Bnce</th><th style="width:7%">Unsb</th><th style="width:12%">Revenue</th><th style="width:5%">Ord</th><th style="width:5%">CV%</th></tr></thead>
     <tbody id="all-camps-tbody"></tbody>
   </table>
   </div>
@@ -462,7 +484,7 @@ body{font-family:var(--font);background:var(--off);color:var(--grey);min-height:
   <div class="card" style="margin-bottom:14px">
     <div class="ct">Campaign performance — May 2026</div>
     <div class="cs">Sorted by open rate · all from Constant Contact reports</div>
-    <div class="tbl-wrap"><table class="camp-table"><thead><tr><th style="width:22%">Campaign</th><th style="width:8%">Type</th><th style="width:6%">Sent</th><th style="width:7%">Open%</th><th style="width:7%">Click%</th><th style="width:6%">Clicks</th><th style="width:6%">Bounce</th><th style="width:5%">Unsub</th><th style="width:12%">Revenue</th><th style="width:5%">Orders</th><th style="width:5%">Conv%</th></tr></thead><tbody id="may-tbody"></tbody></table></div>
+    <div class="tbl-wrap"><table class="camp-table"><thead><tr><th style="width:22%">Campaign</th><th style="width:8%">Type</th><th style="width:6%">Sent</th><th style="width:7%">Open%</th><th style="width:7%">Click%</th><th style="width:6%">Clicks</th><th style="width:6%">Bnce</th><th style="width:5%">Unsb</th><th style="width:12%">Revenue</th><th style="width:5%">Ord</th><th style="width:5%">CV%</th></tr></thead><tbody id="may-tbody"></tbody></table></div>
   </div>
   <div class="g2b">
     <div class="card"><div class="ct">Heatmap click insights — May 2026</div><div class="cs">Top clicked element per campaign</div><div class="hm-grid" id="may-hm"></div></div>
@@ -503,7 +525,7 @@ body{font-family:var(--font);background:var(--off);color:var(--grey);min-height:
   </div>
   <div class="card" style="margin-bottom:14px">
     <div class="ct">Campaign performance — April 2026</div><div class="cs">Sorted by open rate</div>
-    <div class="tbl-wrap"><table class="camp-table"><thead><tr><th style="width:22%">Campaign</th><th style="width:8%">Type</th><th style="width:6%">Sent</th><th style="width:7%">Open%</th><th style="width:7%">Click%</th><th style="width:6%">Clicks</th><th style="width:6%">Bounce</th><th style="width:5%">Unsub</th><th style="width:12%">Revenue</th><th style="width:5%">Orders</th><th style="width:5%">Conv%</th></tr></thead><tbody id="apr-tbody"></tbody></table></div>
+    <div class="tbl-wrap"><table class="camp-table"><thead><tr><th style="width:22%">Campaign</th><th style="width:8%">Type</th><th style="width:6%">Sent</th><th style="width:7%">Open%</th><th style="width:7%">Click%</th><th style="width:6%">Clicks</th><th style="width:6%">Bnce</th><th style="width:5%">Unsb</th><th style="width:12%">Revenue</th><th style="width:5%">Ord</th><th style="width:5%">CV%</th></tr></thead><tbody id="apr-tbody"></tbody></table></div>
   </div>
   <div class="g2b">
     <div class="card"><div class="ct">Heatmap click insights — April 2026</div><div class="cs">Top clicked element per campaign</div><div class="hm-grid" id="apr-hm"></div></div>
@@ -542,7 +564,7 @@ body{font-family:var(--font);background:var(--off);color:var(--grey);min-height:
   </div>
   <div class="card" style="margin-bottom:14px">
     <div class="ct">Campaign performance — March 2026</div><div class="cs">Sorted by open rate</div>
-    <div class="tbl-wrap"><table class="camp-table"><thead><tr><th style="width:22%">Campaign</th><th style="width:8%">Type</th><th style="width:6%">Sent</th><th style="width:7%">Open%</th><th style="width:7%">Click%</th><th style="width:6%">Clicks</th><th style="width:6%">Bounce</th><th style="width:5%">Unsub</th><th style="width:12%">Revenue</th><th style="width:5%">Orders</th><th style="width:5%">Conv%</th></tr></thead><tbody id="mar-tbody"></tbody></table></div>
+    <div class="tbl-wrap"><table class="camp-table"><thead><tr><th style="width:22%">Campaign</th><th style="width:8%">Type</th><th style="width:6%">Sent</th><th style="width:7%">Open%</th><th style="width:7%">Click%</th><th style="width:6%">Clicks</th><th style="width:6%">Bnce</th><th style="width:5%">Unsb</th><th style="width:12%">Revenue</th><th style="width:5%">Ord</th><th style="width:5%">CV%</th></tr></thead><tbody id="mar-tbody"></tbody></table></div>
   </div>
   <div class="g2b">
     <div class="card"><div class="ct">Heatmap click insights — March 2026</div><div class="cs">Top clicked element per campaign</div><div class="hm-grid" id="mar-hm"></div></div>
@@ -583,7 +605,7 @@ body{font-family:var(--font);background:var(--off);color:var(--grey);min-height:
   </div>
   <div class="card" style="margin-bottom:14px">
     <div class="ct">Campaign performance — February 2026</div><div class="cs">Sorted by open rate</div>
-    <div class="tbl-wrap"><table class="camp-table"><thead><tr><th style="width:22%">Campaign</th><th style="width:8%">Type</th><th style="width:6%">Sent</th><th style="width:7%">Open%</th><th style="width:7%">Click%</th><th style="width:6%">Clicks</th><th style="width:6%">Bounce</th><th style="width:5%">Unsub</th><th style="width:12%">Revenue</th><th style="width:5%">Orders</th><th style="width:5%">Conv%</th></tr></thead><tbody id="feb-tbody"></tbody></table></div>
+    <div class="tbl-wrap"><table class="camp-table"><thead><tr><th style="width:22%">Campaign</th><th style="width:8%">Type</th><th style="width:6%">Sent</th><th style="width:7%">Open%</th><th style="width:7%">Click%</th><th style="width:6%">Clicks</th><th style="width:6%">Bnce</th><th style="width:5%">Unsb</th><th style="width:12%">Revenue</th><th style="width:5%">Ord</th><th style="width:5%">CV%</th></tr></thead><tbody id="feb-tbody"></tbody></table></div>
   </div>
   <div class="g2b">
     <div class="card"><div class="ct">Heatmap click insights — February 2026</div><div class="cs">Top clicked element per campaign</div><div class="hm-grid" id="feb-hm"></div></div>
@@ -623,7 +645,7 @@ body{font-family:var(--font);background:var(--off);color:var(--grey);min-height:
   </div>
   <div class="card" style="margin-bottom:14px">
     <div class="ct">Campaign performance — January 2026</div><div class="cs">Sorted by open rate</div>
-    <div class="tbl-wrap"><table class="camp-table"><thead><tr><th style="width:22%">Campaign</th><th style="width:8%">Type</th><th style="width:6%">Sent</th><th style="width:7%">Open%</th><th style="width:7%">Click%</th><th style="width:6%">Clicks</th><th style="width:6%">Bounce</th><th style="width:5%">Unsub</th><th style="width:12%">Revenue</th><th style="width:5%">Orders</th><th style="width:5%">Conv%</th></tr></thead><tbody id="jan-tbody"></tbody></table></div>
+    <div class="tbl-wrap"><table class="camp-table"><thead><tr><th style="width:22%">Campaign</th><th style="width:8%">Type</th><th style="width:6%">Sent</th><th style="width:7%">Open%</th><th style="width:7%">Click%</th><th style="width:6%">Clicks</th><th style="width:6%">Bnce</th><th style="width:5%">Unsb</th><th style="width:12%">Revenue</th><th style="width:5%">Ord</th><th style="width:5%">CV%</th></tr></thead><tbody id="jan-tbody"></tbody></table></div>
   </div>
   <div class="g2b">
     <div class="card"><div class="ct">Heatmap click insights — January 2026</div><div class="cs">Top clicked element per campaign</div><div class="hm-grid" id="jan-hm"></div></div>
